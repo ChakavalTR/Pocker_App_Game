@@ -21,7 +21,7 @@ class GameScreen extends StatelessWidget {
           TextButton(
             onPressed: () {},
             child: Text(
-              'New Game',
+              'Lost Cards',
               style: TextStyle(color: Colors.white, fontSize: 18),
             ),
           ),
