@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pocker_app_game/components/game_board.dart';
 
 class GameScreen extends StatelessWidget {
   const GameScreen({super.key});
@@ -21,13 +22,13 @@ class GameScreen extends StatelessWidget {
           TextButton(
             onPressed: () {},
             child: Text(
-              'Lost Cards',
+              'New Cards',
               style: TextStyle(color: Colors.white, fontSize: 18),
             ),
           ),
         ],
       ),
-      body: Center(child: Text('Welcome to the Home Screen!')),
+      body: const GameBoard(),
     );
   }
 }
