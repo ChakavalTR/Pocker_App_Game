@@ -11,7 +11,7 @@ class GameScreen extends StatelessWidget {
         backgroundColor: Colors.red,
         centerTitle: true,
         title: Text(
-          'Card Game',
+          'Pocker Game',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
