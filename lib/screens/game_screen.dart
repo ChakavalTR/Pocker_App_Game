@@ -1,14 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:pocker_app_game/components/game_board.dart';
+import 'package:pocker_app_game/services/deck_service.dart';
 
-class GameScreen extends StatelessWidget {
+class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
+
+  @override
+  State<GameScreen> createState() => _GameScreenState();
+}
+
+class _GameScreenState extends State<GameScreen> {
+  @override
+  void initState() {
+    super.initState();
+    tempFunc();
+  }
+
+  void tempFunc() async {
+    final service = DeckService();
+    final deck = await service.newDeck();
+    print(deck.remaining);
+    print('--------------');
+    final draw = await service.drawCards(deck, count: 7);
+    print(draw.cards.length);
+    print("--------------");
+    print(draw.remaining);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.lightBlue,
         centerTitle: true,
         title: Text(
           'Pocker Game',
