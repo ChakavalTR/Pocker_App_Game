@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pocker_app_game/components/card_list.dart';
 import 'package:pocker_app_game/components/deck_pile.dart';
 import 'package:pocker_app_game/components/playing_card.dart';
 import 'package:pocker_app_game/models/card_model.dart';
@@ -21,9 +22,37 @@ class GameBoard extends StatelessWidget {
                     alignment: Alignment.center,
                     child: GestureDetector(
                       onTap: () async {
-                        await model.drawCards(model.players.first);
+                        await model.drawCards(model.turn.currentPlayer);
                       },
                       child: DeckPile(remaining: model.currentDeck!.remaining),
+                    ),
+                  ),
+                  Align(
+                    alignment: AlignmentGeometry.topCenter,
+                    child: CardList(player: model.players[1]),
+                  ),
+                  Align(
+                    alignment: AlignmentGeometry.bottomCenter,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            if (model.turn.currentPlayer == model.players[0])
+                              ElevatedButton(
+                                onPressed: model.canEndTurn
+                                    ? () {
+                                        model.endTurn();
+                                      }
+                                    : null,
+                                child: const Text('End Turn'),
+                              ),
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        CardList(player: model.players[0]),
+                      ],
                     ),
                   ),
                 ],

@@ -51,7 +51,7 @@ class _GameScreenState extends State<GameScreen> {
         ],
       ),
       body: GameBoard(),
-      backgroundColor: Colors.green[800],
+      backgroundColor: Colors.green[900],
     );
   }
 }
