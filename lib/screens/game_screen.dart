@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pocker_app_game/components/game_board.dart';
+import 'package:pocker_app_game/models/player_model.dart';
+import 'package:pocker_app_game/providers/game_provider.dart';
 import 'package:pocker_app_game/services/deck_service.dart';
+import 'package:provider/provider.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -10,21 +13,11 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
+  late final GameProvider _gameProvider;
   @override
   void initState() {
+    _gameProvider = Provider.of<GameProvider>(context, listen: false);
     super.initState();
-    tempFunc();
-  }
-
-  void tempFunc() async {
-    final service = DeckService();
-    final deck = await service.newDeck();
-    print(deck.remaining);
-    print('--------------');
-    final draw = await service.drawCards(deck, count: 7);
-    print(draw.cards.length);
-    print("--------------");
-    print(draw.remaining);
   }
 
   @override
@@ -43,15 +36,22 @@ class _GameScreenState extends State<GameScreen> {
         ),
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () async {
+              final players = [
+                PlayerModel(name: 'Chakaval', isHuman: true),
+                PlayerModel(name: 'Bot', isHuman: false),
+              ];
+              await _gameProvider.newGame(players);
+            },
             child: Text(
-              'New Cards',
+              'New Game',
               style: TextStyle(color: Colors.white, fontSize: 18),
             ),
           ),
         ],
       ),
-      body: const GameBoard(),
+      body: GameBoard(),
+      backgroundColor: Colors.green[800],
     );
   }
 }
