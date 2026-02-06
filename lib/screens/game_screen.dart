@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pocker_app_game/components/game_board.dart';
 import 'package:pocker_app_game/models/player_model.dart';
 import 'package:pocker_app_game/providers/crazy_eight_game_provider.dart';
-import 'package:pocker_app_game/providers/game_provider.dart';
-import 'package:pocker_app_game/services/deck_service.dart';
+
 import 'package:provider/provider.dart';
 
 class GameScreen extends StatefulWidget {

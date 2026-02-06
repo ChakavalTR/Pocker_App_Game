@@ -5,9 +5,8 @@ import 'package:pocker_app_game/components/discard_pile.dart';
 import 'package:pocker_app_game/models/card_model.dart';
 import 'package:pocker_app_game/models/player_model.dart';
 import 'package:pocker_app_game/providers/crazy_eight_game_provider.dart';
-import 'package:pocker_app_game/providers/game_provider.dart';
 import 'package:provider/provider.dart';
-import 'dart:ui'; // For the blur effect
+import 'dart:ui';
 
 class GameBoard extends StatelessWidget {
   const GameBoard({super.key});
