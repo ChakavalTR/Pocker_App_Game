@@ -30,7 +30,13 @@ class CardList extends StatelessWidget {
             final card = player.cards[index];
             return Padding(
               padding: const EdgeInsets.only(right: 6.0),
-              child: PlayingCard(card: card, size: size, visible: true),
+              child: PlayingCard(
+                card: card,
+                size: size,
+                // visible: player.isHuman,
+                visible: true,
+                onPlayCard: onPlayCard,
+              ),
             );
           },
         ),

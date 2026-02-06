@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pocker_app_game/components/card_list.dart';
 import 'package:pocker_app_game/components/deck_pile.dart';
-import 'package:pocker_app_game/components/playing_card.dart';
+import 'package:pocker_app_game/components/discard_pile.dart';
 import 'package:pocker_app_game/models/card_model.dart';
 import 'package:pocker_app_game/models/player_model.dart';
+import 'package:pocker_app_game/providers/crazy_eight_game_provider.dart';
 import 'package:pocker_app_game/providers/game_provider.dart';
 import 'package:provider/provider.dart';
 import 'dart:ui'; // For the blur effect
@@ -13,18 +14,27 @@ class GameBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<GameProvider>(
+    return Consumer<CrazyEightsGameProvider>(
       builder: (context, model, child) {
         return model.currentDeck != null
             ? Stack(
                 children: [
                   Align(
                     alignment: Alignment.center,
-                    child: GestureDetector(
-                      onTap: () async {
-                        await model.drawCards(model.turn.currentPlayer);
-                      },
-                      child: DeckPile(remaining: model.currentDeck!.remaining),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        GestureDetector(
+                          onTap: () async {
+                            await model.drawCards(model.turn.currentPlayer);
+                          },
+                          child: DeckPile(
+                            remaining: model.currentDeck!.remaining,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        DiscardPile(cards: model.discards),
+                      ],
                     ),
                   ),
                   Align(
@@ -51,7 +61,15 @@ class GameBoard extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 20),
-                        CardList(player: model.players[0]),
+                        CardList(
+                          player: model.players[0],
+                          onPlayCard: (CardModel card) {
+                            model.playCard(
+                              player: model.players[0],
+                              card: card,
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ),
@@ -99,16 +117,13 @@ class GameBoard extends StatelessWidget {
                           },
                           style: TextButton.styleFrom(
                             backgroundColor: Colors.blueAccent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
                             padding: EdgeInsets.symmetric(
                               horizontal: 30,
                               vertical: 15,
                             ),
                           ),
                           child: Text(
-                            'Press to Start Game',
+                            'Press here to Start The Game',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
